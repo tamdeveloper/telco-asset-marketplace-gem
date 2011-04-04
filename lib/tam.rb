@@ -1,5 +1,5 @@
 module TAM
-#  def self.hello
-#    put "Hello world"
-#  end
+  def self.hello
+    put "Hello world"
+  end
 end
