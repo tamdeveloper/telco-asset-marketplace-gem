@@ -1,3 +1,3 @@
-The Telco Asset Marketplace Ruby Gem
+The telco asset marketplace Ruby gem
 ====================================
 A Ruby wrapper for the Telco Asset Marketplace REST APIs
