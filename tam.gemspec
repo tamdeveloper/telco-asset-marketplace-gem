@@ -4,6 +4,7 @@ require File.expand_path('../lib/tam/version', __FILE__)
 Gem::Specification.new do |s|
   s.add_runtime_dependency('sinatra', '~> 1.2.1')
   s.add_runtime_dependency('json', '~> 1.5')
+  s.add_runtime_dependency('oauth', '~> 0.4.3')
   
   s.name = "tam"
   s.version = TAM::VERSION.dup
