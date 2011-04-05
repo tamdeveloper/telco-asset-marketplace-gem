@@ -1,9 +1,9 @@
 # coding: UTF-8
-#require File.expand_path('../lib/tam/version.rb', __FILE__)
+require File.expand_path('../lib/tam/version', __FILE__)
 
 Gem::Specification.new do |s|
   s.name = "tam"
-  s.version = "0.0.1"#TAM::VERSION.dup
+  s.version = TAM::VERSION.dup
   s.platform = Gem::Platform::RUBY
   s.authors = ["Carlos Manzanares"]
   s.email = ["developers@telcoassetmarketplace.com"]
@@ -22,8 +22,12 @@ Gem::Specification.new do |s|
   s.post_install_message =<<eos
 ********************************************************************************
 
-  Visit our community pages for up-to-date information
+  Visit our community pages for up-to-date information on
+  telco asset marketplace:
   https://code.telcoassetmarketplace.com/
+  In order to use this gem you will also need to register as
+  a developer in telco asset marketplace:
+  https://telcoassetmarketplace.com
 
 ********************************************************************************  
 eos
