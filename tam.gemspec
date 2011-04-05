@@ -2,7 +2,8 @@
 require File.expand_path('../lib/tam/version', __FILE__)
 
 Gem::Specification.new do |s|
-  s.add_runtime_dependency('sinatra', "~> 1.2.1")
+  s.add_runtime_dependency('sinatra', '~> 1.2.1')
+  s.add_runtime_dependency('json', '~> 1.5')
   
   s.name = "tam"
   s.version = TAM::VERSION.dup
@@ -24,12 +25,12 @@ Gem::Specification.new do |s|
   s.post_install_message =<<eos
 ********************************************************************************
 
-  Visit our community pages for up-to-date information on
+  Visit our community pages for up-to-date information on 
   telco asset marketplace:
-  https://code.telcoassetmarketplace.com/
-  In order to use this gem you will also need to register as
-  a developer in telco asset marketplace:
-  https://telcoassetmarketplace.com
+      https://code.telcoassetmarketplace.com/
+  Notice that in order to use this gem you will also need to register as a 
+  developer in telco asset marketplace:
+      https://telcoassetmarketplace.com
 
 ********************************************************************************  
 eos

@@ -4,7 +4,8 @@ module TAM
     # An array of valid keys in the options hash when configuring a {TAM::API}
     VALID_OPTIONS_KEYS = [
       :consumer_key,
-      :consumer_secret].freeze
+      :consumer_secret,
+      :consumer_handler].freeze
 
     # @private
     attr_accessor *VALID_OPTIONS_KEYS
@@ -28,6 +29,7 @@ module TAM
     def reset
       self.consumer_key       = nil
       self.consumer_secret    = nil
+      self.consumer_handler   = nil
       self
     end
   end  
