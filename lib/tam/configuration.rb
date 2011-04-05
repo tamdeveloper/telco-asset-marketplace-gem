@@ -5,7 +5,13 @@ module TAM
     VALID_OPTIONS_KEYS = [
       :consumer_key,
       :consumer_secret,
-      :consumer_handler].freeze
+      :consumer_handler,
+      :site,
+      :request_token_path,
+      :access_token_path,
+      :authorize_path,
+      :oauth_scheme,
+      :oauth_http_method].freeze
 
     # @private
     attr_accessor *VALID_OPTIONS_KEYS
@@ -30,6 +36,12 @@ module TAM
       self.consumer_key       = nil
       self.consumer_secret    = nil
       self.consumer_handler   = nil
+      self.site               = 'https://telcoassetmarketplace.com'
+      self.request_token_path = '/api/1/oauth/request_token'
+      self.access_token_path  = '/api/1/oauth/access_token'
+      self.authorize_path     = '/web/authorize'
+      self.oauth_scheme       = :query_string
+      self.oauth_http_method  = :get
       self
     end
   end  

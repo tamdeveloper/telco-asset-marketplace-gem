@@ -5,11 +5,15 @@ module TAM
       request.body.rewind # in case someone already read it
       
       data = JSON.parse request.body.read
-      sms_body = data["body"]
+      body = data["body"]
       access_token = data["access_token"]
+      token_secret = data["token_secret"]
       
-      dispatch('receive_sms', access_token, sms_body)
+      dispatch('receive_sms', access_token, token_secret, body)
     end
     
+    def self.send_sms(access_token, token_secret, body)
+      consumer = create_oauth_consumer
+    end
   end
 end
