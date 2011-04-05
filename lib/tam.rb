@@ -8,9 +8,10 @@ module TAM
     puts "Hello world"
   end
   
-  def self.add_route
-    ActionController::Routing::Routes.draw do 
-      match "receive_message" => "api#receive_message"
+  class AnApp < Sinatra::Base
+    get "/sinatra" do
+      "Hello from Sinatra's world!!"
     end
   end
+  
 end

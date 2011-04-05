@@ -26,8 +26,8 @@ module TAM
 
     # Reset all configuration options to defaults
     def reset
-      self.consumer_key       = DEFAULT_CONSUMER_KEY
-      self.consumer_secret    = DEFAULT_CONSUMER_SECRET
+      self.consumer_key       = nil
+      self.consumer_secret    = nil
       self
     end
   end  
