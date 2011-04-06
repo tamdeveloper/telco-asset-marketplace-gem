@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'tam/error'
+require 'tam/user'
 
 module TAM
   # Wrapper for the telco asset marketplace REST API
@@ -12,13 +13,33 @@ module TAM
     # API-namespaced.
     require 'tam/api/sms'
     
-    def dispatch(method, *args)
+    def dispatch_to_handler(method, *args)
       if !TAM.consumer_handler.nil? and TAM.consumer_handler.respond_to?(method)
-        TAM.consumer_handler.send(method, *args)
-        response.status = 200
+        begin
+          TAM.consumer_handler.send(method, *args)
+          response.status = 200
+        rescue TAM::Error => error
+          response.status = 500
+          'Application has suffered an internal error ' + error.message + ', ' + error.body
+        end
       elsif
         response.status = 500
         'Application has not configured the telco asset marketplace consumer_handler'
+      end
+    end
+    
+    def self.dispatch_to_tam(endpoint, user, payload)
+      consumer = create_oauth_consumer
+      access_token = OAuth::AccessToken.new(consumer, user.access_token, user.token_secret)
+
+      response = access_token.post(endpoint, payload, {'Content-Type' => 'application/json'})
+      
+      if response.class == Net::HTTPUnauthorized
+        raise RequestNotAuthorized.new(response.message, response.body)
+      elsif response.class == Net::HTTPOK
+        return
+      else
+        raise UnexpectedError.new(response.message, response.body)
       end
     end
     
@@ -29,12 +50,12 @@ module TAM
       
       OAuth::Consumer.new(TAM.consumer_key, TAM.consumer_secret,
         {
-          TAM.site,
-          TAM.request_token_path,
-          TAM.access_token_path,  
-          TAM.authorize_path, 
-          TAM.oauth_scheme,
-          TAM.oauth_http_method
+          :site => TAM.site,
+          :request_token_path => TAM.request_token_path,
+          :access_token_path => TAM.access_token_path,  
+          :authorize_path => TAM.authorize_path, 
+          :scheme => TAM.oauth_scheme,
+          :http_method => TAM.oauth_http_method
         })
     end
     

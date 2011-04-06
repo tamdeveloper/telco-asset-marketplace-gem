@@ -5,8 +5,8 @@ module TAM
     attr_accessor :token_secret
     
     def initialize(access_token, token_secret)
-      :access_token = access_token
-      :token_secret = token_secret
+      @access_token = access_token
+      @token_secret = token_secret
     end
   end
 end
