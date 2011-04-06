@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'oauth'
 require 'tam/error'
 require 'tam/user'
 

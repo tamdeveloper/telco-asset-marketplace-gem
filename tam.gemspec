@@ -5,6 +5,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('sinatra', '~> 1.2.1')
   s.add_runtime_dependency('json', '~> 1.5')
   s.add_runtime_dependency('oauth', '~> 0.4.3')
+  s.add_runtime_dependency('ruby-debug')
   
   s.name = "tam"
   s.version = TAM::VERSION.dup

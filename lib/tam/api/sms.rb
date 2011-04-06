@@ -1,4 +1,5 @@
 require 'tam/user'
+require 'json'
 
 module TAM
   class API
