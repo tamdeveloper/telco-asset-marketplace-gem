@@ -26,6 +26,20 @@ module TAM
       yield self
     end
     
+    def configure(config)
+      unless config.empty?
+        self.consumer_key       = config['consumer_key']        if config['consumer_key']
+        self.consumer_secret    = config['consumer_secret']     if config['consumer_secret']
+        self.consumer_handler   = config['consumer_handler']    if config['consumer_handler']
+        self.site               = config['site']                if config['site']
+        self.request_token_path = config['request_token_path']  if config['request_token_path']
+        self.access_token_path  = config['access_token_path']   if config['access_token_path']
+        self.authorize_path     = config['authorize_path']      if config['authorize_path']
+        self.oauth_scheme       = config['oauth_scheme']        if config['oauth_scheme']
+        self.oauth_http_method  = config['oauth_http_method']   if config['oauth_http_method']
+      end
+    end
+    
     # Create a hash of options and their values
     def options
       Hash[VALID_OPTIONS_KEYS.map {|key| [key, send(key)] }]
