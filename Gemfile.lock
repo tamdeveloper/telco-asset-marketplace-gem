@@ -1,0 +1,27 @@
+PATH
+  remote: .
+  specs:
+    tam (0.0.1)
+      json (~> 1.5)
+      oauth (~> 0.4.3)
+      sinatra (~> 1.2.1)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    json (1.5.1)
+    oauth (0.4.3)
+    rack (1.2.2)
+    sinatra (1.2.1)
+      rack (~> 1.1)
+      tilt (>= 1.2.2, < 2.0)
+    tilt (1.2.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  json (~> 1.5)
+  oauth (~> 0.4.3)
+  sinatra (~> 1.2.1)
+  tam!
