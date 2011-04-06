@@ -12,6 +12,7 @@ module TAM
     # Require api method modules after initializing the API class in
     # order to avoid a superclass mismatch error, allowing those modules to be
     # API-namespaced.
+    require 'tam/api/oauth'
     require 'tam/api/sms'
     
     # Dispatches the request to the telco asset marketplace handler configured by 
@@ -61,22 +62,6 @@ module TAM
       else
         raise UnexpectedError.new(response.message, response.body)
       end
-    end
-    
-    def self.create_oauth_consumer
-      if TAM.consumer_key.nil? or TAM.consumer_secret.nil?
-        raise OAuthConsumerAttributesMissing.new
-      end
-      
-      OAuth::Consumer.new(TAM.consumer_key, TAM.consumer_secret,
-        {
-          :site => TAM.site,
-          :request_token_path => TAM.request_token_path,
-          :access_token_path => TAM.access_token_path,  
-          :authorize_path => TAM.authorize_path, 
-          :scheme => TAM.oauth_scheme,
-          :http_method => TAM.oauth_http_method
-        })
     end
     
   end

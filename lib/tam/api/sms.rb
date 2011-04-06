@@ -1,9 +1,13 @@
-require 'tam/user'
+require 'sinatra'
+require 'oauth'
 require 'json'
+require 'tam/user'
 
+# SMS part of the telco asset marketplace REST API
 module TAM
   class API
     # URL handler for receiving SMS
+    # @private
     post "/*/receive_sms" do
       request.body.rewind # in case someone already read it
       
