@@ -13,6 +13,8 @@ module TAM
     # API-namespaced.
     require 'tam/api/sms'
     
+    # Dispatches the request to the telco asset marketplace handler configured by 
+    # this gem client
     def dispatch_to_handler(method, *args)
       if !TAM.consumer_handler.nil? and TAM.consumer_handler.respond_to?(method)
         begin
@@ -28,6 +30,7 @@ module TAM
       end
     end
     
+    # Dispatches the request to the telco asset marketplace REST API
     def self.dispatch_to_tam(endpoint, user, payload)
       consumer = create_oauth_consumer
       access_token = OAuth::AccessToken.new(consumer, user.access_token, user.token_secret)
