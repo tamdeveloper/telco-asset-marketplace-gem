@@ -2,7 +2,7 @@ require 'rails'
 
 module TAM
   class TamRailtie < Rails::Railtie
-    config.after_initialize do
+    initializer "tam.boot" do
       configure_with_yaml
     end
     
@@ -13,7 +13,7 @@ module TAM
     # Besides using a tam.yml, developers can also configure directly TAM settings, e.g.:
     # TAM.consumer_key = 'h42woy35tl08o44l'
     def configure_with_yaml
-      cfg = load_config(File.join('config', 'tam.yml')).freeze
+      cfg = load_config(File.join(Rails.root, 'config', 'tam.yml')).freeze
       TAM.configure(cfg)
     end
     

@@ -16,6 +16,23 @@ module TAM
     # @private
     attr_accessor *VALID_OPTIONS_KEYS
       
+    def consumer_handler=(consumer_handler)
+      if consumer_handler.class == String
+        begin
+          @consumer_handler = Object.const_get(consumer_handler).new
+        rescue NameError => error
+          LOGGER.error 'Application has provided an invalid telco asset marketplace consumer_handler: ' + TAM.consumer_handler
+          raise InvalidConsumerHandler.new 'Application has provided an invalid telco asset marketplace consumer_handler: ' + TAM.consumer_handler
+        end
+      else
+        @consumer_handler = consumer_handler
+      end
+    end
+    
+    def consumer_handler
+      @consumer_handler
+    end
+    
     # When this module is extended, set all configuration options to their default values
     def self.extended(base)
       base.reset

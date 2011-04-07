@@ -35,7 +35,7 @@ module TAM
     # Sends an SMS
     def self.send_sms(from_app, to_user, body)
       payload = JSON.generate({'body' => body, 'from' => from_app})
-      dispatch_to_tam('/api/1/sms/send', to_user, payload)
+      dispatch_to_tam(:post, '/api/1/sms/send', to_user, payload)
     end
   end
 end

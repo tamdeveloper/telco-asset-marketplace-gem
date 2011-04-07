@@ -23,6 +23,7 @@ module TAM
     # @private
     get '/*/oauth_callback' do
       if params[:denied].nil?
+        consumer = TAM::API.create_oauth_consumer
         request_token = session[:request_token]
         verifier = params[:oauth_verifier]
         access_token = request_token.get_access_token(:oauth_verifier => verifier)

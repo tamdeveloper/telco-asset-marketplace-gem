@@ -14,6 +14,7 @@ module TAM
     # API-namespaced.
     require 'tam/api/oauth'
     require 'tam/api/sms'
+    require 'tam/api/location'
     
     # Dispatches the request to the telco asset marketplace handler configured by 
     # this gem client
@@ -21,15 +22,6 @@ module TAM
       if TAM.consumer_handler.nil?
         LOGGER.error 'Application has not configured the telco asset marketplace consumer_handler'
         raise InvalidConsumerHandler.new 'Application has not configured the telco asset marketplace consumer_handler'
-      end
-      
-      if TAM.consumer_handler.class == String
-        begin
-          TAM.consumer_handler = Object.const_get(TAM.consumer_handler).new
-        rescue NameError => error
-          LOGGER.error 'Application has provided an invalid telco asset marketplace consumer_handler: ' + TAM.consumer_handler
-          raise InvalidConsumerHandler.new 'Application has provided an invalid telco asset marketplace consumer_handler: ' + TAM.consumer_handler
-        end
       end
       
       if TAM.consumer_handler.respond_to?(method)
@@ -44,14 +36,14 @@ module TAM
     end
     
     # Dispatches the request to the telco asset marketplace REST API
-    def self.dispatch_to_tam(endpoint, user, payload)
+    def self.dispatch_to_tam(http_method, endpoint, user, payload='')
       consumer = create_oauth_consumer
       access_token = OAuth::AccessToken.new(consumer, user.access_token, user.token_secret)
 
-      response = access_token.post(endpoint, payload, {'Content-Type' => 'application/json'})
+      response = access_token.send(http_method, endpoint, payload, {'Content-Type' => 'application/json'})
       
       if response.class == Net::HTTPOK
-        return
+        return response.body
       elsif response.class == Net::HTTPUnauthorized
         LOGGER.error 'Request not authorized ' + response.message + ', ' + response.body
         raise RequestNotAuthorized.new(response.message, response.body)
