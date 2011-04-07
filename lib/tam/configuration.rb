@@ -11,7 +11,8 @@ module TAM
       :access_token_path,
       :authorize_path,
       :oauth_scheme,
-      :oauth_http_method].freeze
+      :oauth_http_method,
+      :callback_path].freeze
 
     # @private
     attr_accessor *VALID_OPTIONS_KEYS
@@ -54,6 +55,7 @@ module TAM
         self.authorize_path     = config['authorize_path']      if config['authorize_path']
         self.oauth_scheme       = config['oauth_scheme']        if config['oauth_scheme']
         self.oauth_http_method  = config['oauth_http_method']   if config['oauth_http_method']
+        self.callback_path      = config['callback_path']       if config['callback_path']
       end
     end
     
@@ -73,6 +75,7 @@ module TAM
       self.authorize_path     = '/web/authorize'
       self.oauth_scheme       = :query_string
       self.oauth_http_method  = :get
+      self.callback_path      = 'tamapi'
       self
     end
   end  

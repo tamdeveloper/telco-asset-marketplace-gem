@@ -9,14 +9,15 @@ module TAM
     enable :sessions
     
     # Authorizes a user of telco asset marketplace to use your application
-    # After the OAUTH flow is finished then the configured consumer_handler.authorized(user)
-    # or consumer_handler.denied are invoked
+    # After the OAUTH flow is finished then the configured consumer_handler.authorized(user, session)
+    # or consumer_handler.denied(session) are invoked
     get '/*/authorize' do
       consumer = TAM::API.create_oauth_consumer
       request_token = consumer.get_request_token
       session[:request_token] = request_token
       
-      redirect request_token.authorize_url(:oauth_callback => url('/tamapi/oauth_callback'))
+      oauth_callback_url = url('/' + TAM.callback_path + '/oauth_callback')
+      redirect request_token.authorize_url(:oauth_callback => oauth_callback_url)
     end
     
     # OAUTH callback for telco asset marketplace
@@ -28,9 +29,9 @@ module TAM
         verifier = params[:oauth_verifier]
         access_token = request_token.get_access_token(:oauth_verifier => verifier)
         user = User.new(access_token.token, access_token.secret)
-        redirect dispatch_to_handler('authorized', user)
+        redirect dispatch_to_handler('authorized', user, session)
       else
-        redirect dispatch_to_handler('denied')
+        redirect dispatch_to_handler('denied', session)
       end
     end
     

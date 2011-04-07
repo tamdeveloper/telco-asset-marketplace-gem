@@ -40,7 +40,11 @@ module TAM
       consumer = create_oauth_consumer
       access_token = OAuth::AccessToken.new(consumer, user.access_token, user.token_secret)
 
-      response = access_token.send(http_method, endpoint, payload, {'Content-Type' => 'application/json'})
+      if (http_method == :get)
+        response = access_token.send(http_method, endpoint, {'Content-Type' => 'application/json'})
+      else
+        response = access_token.send(http_method, endpoint, payload, {'Content-Type' => 'application/json'})
+      end
       
       if response.class == Net::HTTPOK
         return response.body
