@@ -19,30 +19,25 @@ module TAM
     # this gem client
     def dispatch_to_handler(method, *args)
       if TAM.consumer_handler.nil?
-        response.status = 500
         LOGGER.error 'Application has not configured the telco asset marketplace consumer_handler'
-        return 'Application has not configured the telco asset marketplace consumer_handler'
+        raise InvalidConsumerHandler.new 'Application has not configured the telco asset marketplace consumer_handler'
       end
       
       if TAM.consumer_handler.class == String
         begin
-          TAM.consumer_handler = Object.const_get(TAM.consumer_handler)
+          TAM.consumer_handler = Object.const_get(TAM.consumer_handler).new
         rescue NameError => error
-          response.status = 500
           LOGGER.error 'Application has provided an invalid telco asset marketplace consumer_handler: ' + TAM.consumer_handler
-          return 'Application has provided an invalid telco asset marketplace consumer_handler: ' + TAM.consumer_handler
+          raise InvalidConsumerHandler.new 'Application has provided an invalid telco asset marketplace consumer_handler: ' + TAM.consumer_handler
         end
       end
       
       if TAM.consumer_handler.respond_to?(method)
         begin
-          TAM.consumer_handler.send(method, *args)
-          response.status = 200
-          return ''
+          return TAM.consumer_handler.send(method, *args)
         rescue TAM::Error => error
-          response.status = 500
           LOGGER.error 'Application has suffered an internal error: ' + error.message + ', ' + error.body
-          return 'Application has suffered an internal error: ' + error.message + ', ' + error.body
+          raise error
         end
       end
       

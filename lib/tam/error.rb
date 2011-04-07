@@ -28,6 +28,9 @@ module TAM
   
   # Raised when client is using an invalid consumer_secret
   class InvalidConsumerSecret < OAuthError; end
+  
+  # Raised when client is using an invalid consumer_handler
+  class InvalidConsumerHandler < Error; end
 
   class UnexpectedError < Error; end  
 end

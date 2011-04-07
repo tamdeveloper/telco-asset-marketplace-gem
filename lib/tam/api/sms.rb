@@ -7,6 +7,10 @@ require 'tam/user'
 module TAM
   class API
     # URL handler for receiving SMS
+    # After receiving an SMS, the configured 
+    # consumer_handler.receive_sms(from_user, to_app, body)
+    # is invoked
+    #
     # @private
     post "/*/receive_sms" do
       request.body.rewind # in case someone already read it
@@ -18,8 +22,14 @@ module TAM
       from_user = User.new(access_token, token_secret)
       to_app = data["to"]
       body = data["body"]
-      
-      dispatch_to_handler('receive_sms', from_user, to_app, body)
+      begin
+        dispatch_to_handler('receive_sms', from_user, to_app, body)
+        response.status = 200
+        return ''
+      rescue Error => error
+        response.status = 500
+        return error.message
+      end
     end
     
     # Sends an SMS
