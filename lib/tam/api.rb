@@ -41,8 +41,8 @@ module TAM
           return ''
         rescue TAM::Error => error
           response.status = 500
-          LOGGER.error 'Application has suffered an internal error ' + error.message + ', ' + error.body
-          return 'Application has suffered an internal error ' + error.message + ', ' + error.body
+          LOGGER.error 'Application has suffered an internal error: ' + error.message + ', ' + error.body
+          return 'Application has suffered an internal error: ' + error.message + ', ' + error.body
         end
       end
       
@@ -55,10 +55,21 @@ module TAM
 
       response = access_token.post(endpoint, payload, {'Content-Type' => 'application/json'})
       
-      if response.class == Net::HTTPUnauthorized
-        raise RequestNotAuthorized.new(response.message, response.body)
-      elsif response.class == Net::HTTPOK
+      if response.class == Net::HTTPOK
         return
+      elsif response.class == Net::HTTPUnauthorized
+        LOGGER.error 'Request not authorized ' + response.message + ', ' + response.body
+        raise RequestNotAuthorized.new(response.message, response.body)
+      elsif response.class == Net::HTTPBadRequest
+        if response.body.include? 'consumer_key_unknown'
+          LOGGER.error 'Configured telco asset marketplace consumer_key is not valid: ' + response.message + ', ' + response.body
+          raise InvalidConsumerKey.new(response.message, response.body)
+        elsif response.body.include? 'signature_invalid'
+          LOGGER.error 'Configured telco asset marketplace consumer_secret is not valid: ' + response.message + ', ' + response.body
+          raise InvalidConsumerSecret.new(response.message, response.body)
+        else
+          raise UnexpectedError.new(response.message, response.body)
+        end
       else
         raise UnexpectedError.new(response.message, response.body)
       end

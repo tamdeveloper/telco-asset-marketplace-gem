@@ -20,6 +20,15 @@ module TAM
   # Raised when client tries to use any of the API methods without user authorization
   class RequestNotAuthorized < Error; end  
 
+  # Raised when client performs a wrong OAUTH interaction (this is a super-class)
+  class OAuthError < Error; end
+
+  # Raised when client is using an invalid consumer_key
+  class InvalidConsumerKey < OAuthError; end
+  
+  # Raised when client is using an invalid consumer_secret
+  class InvalidConsumerSecret < OAuthError; end
+
   class UnexpectedError < Error; end  
 end
   
