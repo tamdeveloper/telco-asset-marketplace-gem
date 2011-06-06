@@ -13,12 +13,16 @@ Documentation
 How to Use
 ----------
 If you are using rails then:
-1. Add the tam fem to your Gemfile
 
+1. Add the tam gem to your Gemfile
+
+```ruby
 	gem 'tam'
+```
 
 2. Create a tam.yml file in config with following contents:
 
+```ruby
 	development: &defaults
 		consumer_key: [the consumer key generated in telcoassetmarketplace.com for you application]
 		consumer_secret: [the consumer secret generated in telcoassetmarketplace.com for you application]
@@ -27,15 +31,19 @@ If you are using rails then:
 		<<: *defaults
 	production:
 		<<: *defaults
+```
 		
 3. Add following route to your routes.rb
 
+```ruby
 	match '/tamapi/(:string)' => TAM::API
+```
 	
 	(you can replace 'tamapi' with any other namespace)
 	
 4. Implement the telcoassetmarketplace handler logic (e.g.: tam_handler.rb in helpers)
 
+```ruby
 	class TamHandler
 	  def authorized(user, session)
 		# should return the URL to which telcoassermarketplace should redirect
@@ -49,4 +57,4 @@ If you are using rails then:
 	  end
 	  
 	end
-	
+```	
