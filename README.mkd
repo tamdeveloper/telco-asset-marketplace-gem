@@ -22,11 +22,11 @@ If you are using rails then:
 
 2. Create a tam.yml file in config with following contents:
 
-```ruby
+```yaml
 	development: &defaults
-		consumer_key: [the consumer key generated in telcoassetmarketplace.com for you application]
-		consumer_secret: [the consumer secret generated in telcoassetmarketplace.com for you application]
-		consumer_handler: [the of the class that implements the telcoassetmarketplace handler logic]
+		consumer_key:     # the consumer key generated in telcoassetmarketplace.com for you application
+		consumer_secret:  # the consumer secret generated in telcoassetmarketplace.com for you application
+		consumer_handler: # the of the class that implements the telcoassetmarketplace handler logic
 	test:
 		<<: *defaults
 	production:
