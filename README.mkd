@@ -36,10 +36,8 @@ If you are using rails then:
 3. Add following route to your routes.rb
 
 ```ruby
-	match '/tamapi/(:string)' => TAM::API
+	match '/tamapi/(:string)' => TAM::API 	# you can replace 'tamapi' with any other namespace
 ```
-	
-	(you can replace 'tamapi' with any other namespace)
 	
 4. Implement the telcoassetmarketplace handler logic (e.g.: tam_handler.rb in helpers)
 
