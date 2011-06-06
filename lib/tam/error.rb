@@ -3,7 +3,7 @@ module TAM
   class Error < StandardError
     attr_reader :body
 
-    def initialize(message, body = nil)
+    def initialize(message, body = '')
       @body = body
       super message
     end
@@ -33,5 +33,8 @@ module TAM
   class InvalidConsumerHandler < Error; end
 
   class UnexpectedError < Error; end  
+  
+  # Raised when one of the telco asset marketplace services is not available
+  class ServiceUnavailable < Error; end
 end
   

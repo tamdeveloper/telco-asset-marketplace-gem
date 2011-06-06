@@ -61,6 +61,9 @@ module TAM
         else
           raise UnexpectedError.new(response.message, response.body)
         end
+      elsif response.class == Net::HTTPServiceUnavailable
+        LOGGER.error 'telco asset marketplace service ' + endpoint + ' not available'
+        raise ServiceUnavailable.new(response.message, response.body)
       else
         raise UnexpectedError.new(response.message, response.body)
       end

@@ -1,5 +1,6 @@
 require 'json'
 require 'tam/user'
+require 'tam/error'
 
 # SMS part of the telco asset marketplace REST API
 module TAM
@@ -14,8 +15,12 @@ module TAM
     #     "longitude"=>23.9063},
     #   "status"=>{"code"=>0, "message"=>"Request was handled succesfully"}}
     def self.getcoord(user)
-      response = dispatch_to_tam(:get, '/api/1/location/getcoord', user)
-      JSON.parse response
+      begin
+        response = dispatch_to_tam(:get, '/api/1/location/getcoord', user)
+        JSON.parse response
+      rescue TAM::ServiceUnavailable
+        raise TAM::ServiceUnavailable.new 'The location service is not available. If you are using the service on a persona, i.e.: through the sandbox, then remember to set the location of the persona'
+      end
     end
   end
 end
