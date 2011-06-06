@@ -15,6 +15,7 @@ module TAM
     require 'tam/api/oauth'
     require 'tam/api/sms'
     require 'tam/api/location'
+    require 'tam/api/charging'
     
     # Dispatches the request to the telco asset marketplace handler configured by 
     # this gem client
