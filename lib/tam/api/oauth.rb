@@ -29,9 +29,9 @@ module TAM
         verifier = params[:oauth_verifier]
         access_token = request_token.get_access_token(:oauth_verifier => verifier)
         user = User.new(access_token.token, access_token.secret)
-        redirect dispatch_to_handler('authorized', user, session)
+        redirect url(dispatch_to_handler('authorized', user, session))
       else
-        redirect dispatch_to_handler('denied', session)
+        redirect url(dispatch_to_handler('denied', session))
       end
     end
     
