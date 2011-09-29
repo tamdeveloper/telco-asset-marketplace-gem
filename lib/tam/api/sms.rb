@@ -22,8 +22,10 @@ module TAM
       from_user = User.new(access_token, token_secret)
       to_app = data["to"]
       body = data["body"]
+      transaction_id = data["transaction_id"]
+
       begin
-        dispatch_to_handler('receive_sms', from_user, to_app, body)
+        dispatch_to_handler('receive_sms', from_user, to_app, body, transaction_id)
         response.status = 200
         return ''
       rescue Error => error
@@ -33,9 +35,13 @@ module TAM
     end
     
     # Sends an SMS
-    def self.send_sms(from_app, to_user, body)
-      payload = JSON.generate({'body' => body, 'from' => from_app})
-      dispatch_to_tam(:post, '/api/1/sms/send', to_user, payload)
+    def self.send_sms(from_app, to_user, body, transaction_id = nil)
+      payload = {'body' => body, 'from' => from_app}
+      if transaction_id
+        payload["transaction_id"] = transaction_id
+      end
+      response = dispatch_to_tam(:post, '/api/1/sms/send', to_user, JSON.generate(payload))
+      JSON.parse response
     end
   end
 end

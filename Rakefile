@@ -29,3 +29,12 @@ desc "Clean automatically generated files"
 task :clean do
   FileUtils.rm_rf "pkg"
 end
+
+require 'spec/rake/spectask'
+
+Spec::Rake::SpecTask.new(:spec) do |t|
+  t.spec_files = Dir.glob('spec/**/*_spec.rb')
+end
+
+desc "Run tests"
+task :default => :spec
