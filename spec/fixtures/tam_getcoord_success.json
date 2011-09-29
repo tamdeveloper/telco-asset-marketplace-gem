@@ -1,0 +1,11 @@
+{
+  "status": {
+    "code":0,
+    "message":"Message sent successfully"
+	}, "body": {
+		"latitude":10.0,
+    	"longitude":-20.0, 
+    	"accuracy":10, 
+    	"timestamp":1288747339000
+ 	}
+}
