@@ -56,3 +56,11 @@ If you are using rails then:
 	  
 	end
 ```	
+
+5. The routes exposed by the gem in your rails application are:
+
+```ruby
+	/tamapi/authorize
+	/tamapi/receive_sms		# use this one (complement to form absolute path) as SMS URL when registering your application in telcoassetmarketplace.com
+	/tamapi/oauth_callback  # use this one (complement to form absolute path) as OAUTH callback URL when registering your application in telcoassetmarketplace.com
+```
