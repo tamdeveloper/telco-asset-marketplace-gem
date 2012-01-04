@@ -9,7 +9,7 @@ module TAM
   # otherwise we create one that points to the standard output
   LOGGER = 
     if defined? Rails 
-      RAILS_DEFAULT_LOGGER
+      Rails.logger
     else 
       Logger.new(STDOUT)
     end
