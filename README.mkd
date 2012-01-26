@@ -1,4 +1,4 @@
 Repository moved
 ==================
 
-Checkout https://github.com/creatary/creatary-js-sdk
+Check out https://github.com/creatary/creatary-ruby-sdk
